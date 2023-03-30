@@ -1,0 +1,17 @@
+#!/bin/sh
+echo "Running ~/.xsession"
+
+export PATH=/usr/local/bin:/usr/local/ghc/bin:$HOME/.local/bin:$HOME/.cabal/bin:$PATH
+export LIBGL_ALWAYS_INDIRECT=true
+
+autorandr --load extended
+
+setxkbmap -layout us -variant dvp -option compose:pause -option keypad:legacy -option numpad:shift3 -option kpdl:semi -option caps:ctrl_modifier
+
+xmodmap ~/.Xmodmap
+xrdb -merge ~/.Xdefaults
+
+gpg-agent --daemon --enable-ssh-support
+
+~/.cache/xmonad/xmonad-x86_64-openbsd > $HOME/.xmonad-errors 2>&1
+
